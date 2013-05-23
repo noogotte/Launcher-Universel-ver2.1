@@ -14,39 +14,32 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package fr.eelite.mclauncher;
 
 import java.awt.Insets;
 import java.awt.LayoutManager;
 import javax.swing.JPanel;
 
-public class TransparentPanel extends JPanel
-{
+public class TransparentPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Insets insets;
 
-	public TransparentPanel()
-	{
-	}
+	public TransparentPanel() {}
 
-	public TransparentPanel(LayoutManager layout)
-	{
+	public TransparentPanel(LayoutManager layout) {
 		setLayout(layout);
 	}
 
-	public boolean isOpaque()
-	{
+	public boolean isOpaque() {
 		return false;
 	}
 
-	public void setInsets(int a, int b, int c, int d)
-	{
+	public void setInsets(int a, int b, int c, int d){
 		this.insets = new Insets(a, b, c, d);
 	}
 
-	public Insets getInsets()
-	{
+	public Insets getInsets() {
 		if (this.insets == null)
 			return super.getInsets();
 		return this.insets;

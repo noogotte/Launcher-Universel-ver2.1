@@ -22,23 +22,17 @@ import java.net.URL;
 import javax.swing.JTextPane;
 
 
-public class LoginFormThread extends Thread
-{
+public class LoginFormThread extends Thread {
 	private JTextPane editorPane;
 
-	public LoginFormThread(JTextPane editorPane)
-	{
+	public LoginFormThread(JTextPane editorPane) {
 		this.editorPane = editorPane;
 	}
 
-	public void run()
-	{
-		try
-		{
+	public void run() {
+		try {
 			editorPane.setPage(new URL(Theme.getProperty("url_news")));
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			editorPane.setText("Impossible de charger les News");
 		}

@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package fr.eelite.mclauncher;
 
 import java.io.IOException;
@@ -22,30 +22,24 @@ import java.io.IOException;
 import java.util.Properties;
 
 
-public class Config
+public class Config {
 
-{
-	
-	public static final String SERVER_NAME_RAW = GamePath.getProperty("gamepath").toLowerCase().replace(" ", "_").replace("-", "_").replace("é", "e").replace("è", "e").replace("ë", "e").replace("à", "a").replace("ä", "a").replace("â", "a").replace("ç", "c").replace("î", "i").replace("ï", "i").replace("ô", "o").replace("ö", "o").replace("û", "u").replace("ü", "u");
+	public static final String SERVER_NAME_RAW = GamePath.getProperty("gamepath").toLowerCase().replace(" ", "_")
+			.replace("-", "_").replace("é", "e").replace("è", "e").replace("ë", "e").replace("à", "a").replace("ä", "a")
+			.replace("â", "a").replace("ç", "c").replace("î", "i").replace("ï", "i").replace("ô", "o").replace("ö", "o")
+			.replace("û", "u").replace("ü", "u");
 	public static final boolean USE_DOT = true;
-	public static String getProperty(String string)
-	
-	
-	{
+
+	public static String getProperty(String string) {
 		Properties config = new Properties();
-		try
-		{
+		try {
 			config.load(Config.class.getResourceAsStream("/eelite.properties"));
-			
-			}
-	 
-		catch(IOException e)
-		{
+		} catch(IOException e) {
 			e.printStackTrace();
-			}
-		return config.getProperty(string);
 		}
-	
+		return config.getProperty(string);
+	}
+
 }
 
 /*

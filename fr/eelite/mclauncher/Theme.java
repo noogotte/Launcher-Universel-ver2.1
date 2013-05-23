@@ -14,44 +14,35 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package fr.eelite.mclauncher;
 
 import java.io.IOException;
 import java.util.Properties;
 
-public class Theme
-{
+public class Theme {
 
-		public static String getProperty(String string)
-		
-		
-		{
-			Properties config = new Properties();
-			try
-			{
-				config.load(Config.class.getResourceAsStream("/theme"+"/"+Config.getProperty("theme")+"/theme.properties"));
-				
-				}
-		 
-			catch(IOException e)
-			{
-				e.printStackTrace();
-				}
-			return config.getProperty(string);
-			}
-		
+	public static String getProperty(String string) {
+		Properties config = new Properties();
+		try {
+			config.load(Config.class.getResourceAsStream("/theme" + "/" + Config.getProperty("theme") + "/theme.properties"));
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		return config.getProperty(string);
 	}
 
-	/*
-	 *             ______  ______  __      __  __________   ______                                   
-	 *            / ____/ / ____/ / /     / / /___  ____/  / ____/                                   
-	 *           / /___  / /___  / /     / /     / /      / /___                                     
-	 *          / ____/ / ____/ / /     / /     / /      / ____/                                     
-	 *    __   / /___  / /___  / /___  / /     / /      / /___                                       
-	 *   / /  /_____/ /_____/ /_____/ /_/     /_/      /_____/                                       
-	 *  / /______________________________________________________                                    
-	 * /________________________________________________________/   M   A   G   I   S   T   E   R 
-	 * 
-	 * 
-	 */
+}
+
+/*
+ *             ______  ______  __      __  __________   ______                                   
+ *            / ____/ / ____/ / /     / / /___  ____/  / ____/                                   
+ *           / /___  / /___  / /     / /     / /      / /___                                     
+ *          / ____/ / ____/ / /     / /     / /      / ____/                                     
+ *    __   / /___  / /___  / /___  / /     / /      / /___                                       
+ *   / /  /_____/ /_____/ /_____/ /_/     /_/      /_____/                                       
+ *  / /______________________________________________________                                    
+ * /________________________________________________________/   M   A   G   I   S   T   E   R 
+ * 
+ * 
+ */

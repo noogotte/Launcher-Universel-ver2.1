@@ -14,24 +14,21 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package fr.eelite.mclauncher;
 
 import java.awt.Color;
 import javax.swing.JCheckBox;
 
-public class TransparentCheckbox extends JCheckBox
-{
+public class TransparentCheckbox extends JCheckBox {
 	private static final long serialVersionUID = 1L;
 
-	public TransparentCheckbox(String string)
-	{
+	public TransparentCheckbox(String string) {
 		super(string);
 		setForeground(Color.WHITE);
 	}
 
-	public boolean isOpaque()
-	{
+	public boolean isOpaque() {
 		return false;
 	}
 }

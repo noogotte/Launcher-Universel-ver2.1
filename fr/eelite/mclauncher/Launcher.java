@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package fr.eelite.mclauncher;
 
 import java.applet.Applet;
@@ -36,8 +36,8 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-public class Launcher extends Applet implements Runnable, AppletStub, MouseListener
-{
+public class Launcher extends Applet implements Runnable, AppletStub, MouseListener {
+
 	private static final long serialVersionUID = 1L;
 	public Map<String, String> customParameters = new HashMap<String, String>();
 	private GameUpdater gameUpdater;
@@ -49,33 +49,24 @@ public class Launcher extends Applet implements Runnable, AppletStub, MouseListe
 	private boolean hasMouseListener = false;
 	private VolatileImage img;
 
-	public boolean isActive()
-	{
-		if (this.context == 0)
-		{
+	public boolean isActive() {
+		if (this.context == 0) {
 			this.context = -1;
-			try
-			{
+			try {
 				if (getAppletContext() != null)
 					this.context = 1;
-			}
-			catch (Exception localException)
-			{
-			}
+			} catch (Exception localException) {}
 		}
 		if (this.context == -1)
 			return this.active;
 		return super.isActive();
 	}
 
-	public void init(String userName, String latestVersion, String downloadTicket, String sessionId)
-	{
-		try
-		{
-			this.bgImage = ImageIO.read(LoginForm.class.getResourceAsStream("/theme"+"/"+Config.getProperty("theme")+"/"+Theme.getProperty("bgimage2"))).getScaledInstance(32, 32, 16);
-		}
-		catch (IOException e)
-		{
+	public void init(String userName, String latestVersion, String downloadTicket, String sessionId) {
+		try {
+			this.bgImage = ImageIO.read(LoginForm.class.getResourceAsStream(
+					"/theme"+"/" + Config.getProperty("theme") + "/" + Theme.getProperty("bgimage2"))).getScaledInstance(32, 32, 16);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
@@ -85,51 +76,37 @@ public class Launcher extends Applet implements Runnable, AppletStub, MouseListe
 		this.gameUpdater = new GameUpdater(latestVersion, "minecraft.jar?user=" + userName + "&ticket=" + downloadTicket);
 	}
 
-	public boolean canPlayOffline()
-	{
+	public boolean canPlayOffline() {
 		return this.gameUpdater.canPlayOffline();
 	}
 
-	public void init()
-	{
-		if (this.applet != null)
-		{
+	public void init() {
+		if (this.applet != null) {
 			this.applet.init();
 			return;
 		}
 		init(getParameter("userName"), getParameter("latestVersion"), getParameter("downloadTicket"), getParameter("sessionId"));
 	}
 
-	public void start()
-	{
-		if (this.applet != null)
-		{
+	public void start() {
+		if (this.applet != null) {
 			this.applet.start();
 			return;
 		}
 		if (this.gameUpdaterStarted)
 			return;
 
-		Thread t = new Thread()
-		{
-			public void run()
-			{
+		Thread t = new Thread() {
+			public void run() {
 				Launcher.this.gameUpdater.run();
-				try
-				{
+				try {
 					if (!Launcher.this.gameUpdater.fatalError)
 						Launcher.this.replace(Launcher.this.gameUpdater.createApplet());
-				}
-				catch (ClassNotFoundException e)
-				{
+				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
-				}
-				catch (InstantiationException e)
-				{
+				} catch (InstantiationException e) {
 					e.printStackTrace();
-				}
-				catch (IllegalAccessException e)
-				{
+				} catch (IllegalAccessException e) {
 					e.printStackTrace();
 				}
 			}
@@ -137,19 +114,13 @@ public class Launcher extends Applet implements Runnable, AppletStub, MouseListe
 		t.setDaemon(true);
 		t.start();
 
-		t = new Thread()
-		{
-			public void run()
-			{
-				while (Launcher.this.applet == null)
-				{
+		t = new Thread() {
+			public void run() {
+				while (Launcher.this.applet == null) {
 					Launcher.this.repaint();
-					try
-					{
+					try {
 						Thread.sleep(10L);
-					}
-					catch (InterruptedException e)
-					{
+					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
@@ -161,27 +132,22 @@ public class Launcher extends Applet implements Runnable, AppletStub, MouseListe
 		this.gameUpdaterStarted = true;
 	}
 
-	public void stop()
-	{
-		if (this.applet != null)
-		{
+	public void stop() {
+		if (this.applet != null) {
 			this.active = false;
 			this.applet.stop();
 			return;
 		}
 	}
 
-	public void destroy()
-	{
-		if (this.applet != null)
-		{
+	public void destroy() {
+		if (this.applet != null) {
 			this.applet.destroy();
 			return;
 		}
 	}
 
-	public void replace(Applet applet)
-	{
+	public void replace(Applet applet) {
 		this.applet = applet;
 		applet.setStub(this);
 		applet.setSize(getWidth(), getHeight());
@@ -195,33 +161,27 @@ public class Launcher extends Applet implements Runnable, AppletStub, MouseListe
 		validate();
 	}
 
-	public void update(Graphics g)
-	{
+	public void update(Graphics g) {
 		paint(g);
 	}
 
-	public void paint(Graphics g2)
-	{
+	public void paint(Graphics g2) {
 		if (this.applet != null)
 			return;
 
 		int w = getWidth() / 2;
 		int h = getHeight() / 2;
-		if ((this.img == null) || (this.img.getWidth() != w) || (this.img.getHeight() != h))
-		{
+		if ((this.img == null) || (this.img.getWidth() != w) || (this.img.getHeight() != h)) {
 			this.img = createVolatileImage(w, h);
 		}
 
 		Graphics g = this.img.getGraphics();
-		for (int x = 0; x <= w / 32; x++)
-		{
+		for (int x = 0; x <= w / 32; x++) {
 			for (int y = 0; y <= h / 32; y++)
 				g.drawImage(this.bgImage, x * 32, y * 32, null);
 		}
-		if (this.gameUpdater.pauseAskUpdate)
-		{
-			if (!this.hasMouseListener)
-			{
+		if (this.gameUpdater.pauseAskUpdate) {
+			if (!this.hasMouseListener) {
 				this.hasMouseListener = true;
 				addMouseListener(this);
 			}
@@ -245,14 +205,11 @@ public class Launcher extends Applet implements Runnable, AppletStub, MouseListe
 			g.drawString(msg, w / 2 - 56 - 8 - fm.stringWidth(msg) / 2 + 28, h / 2 + 14);
 			msg = "Non";
 			g.drawString(msg, w / 2 + 8 - fm.stringWidth(msg) / 2 + 28, h / 2 + 14);
-		}
-		else
-		{
+		} else {
 			g.setColor(Color.LIGHT_GRAY);
 
 			String msg = "Mise à jour de " + Config.getProperty("server-name");
-			if (this.gameUpdater.fatalError)
-			{
+			if (this.gameUpdater.fatalError) {
 				msg = "Échec de la Mise à Jour";
 			}
 
@@ -263,8 +220,7 @@ public class Launcher extends Applet implements Runnable, AppletStub, MouseListe
 			g.setFont(new Font(null, 0, 12));
 			fm = g.getFontMetrics();
 			msg = this.gameUpdater.getDescriptionForState();
-			if (this.gameUpdater.fatalError)
-			{
+			if (this.gameUpdater.fatalError) {
 				msg = this.gameUpdater.fatalErrorDescription;
 			}
 
@@ -272,8 +228,7 @@ public class Launcher extends Applet implements Runnable, AppletStub, MouseListe
 			msg = this.gameUpdater.subtaskMessage;
 			g.drawString(msg, w / 2 - fm.stringWidth(msg) / 2, h / 2 + fm.getHeight() * 2);
 
-			if (!this.gameUpdater.fatalError)
-			{
+			if (!this.gameUpdater.fatalError) {
 				g.setColor(Color.black);
 				g.fillRect(64, h - 64, w - 128 + 1, 5);
 				g.setColor(new Color(32768));
@@ -288,71 +243,50 @@ public class Launcher extends Applet implements Runnable, AppletStub, MouseListe
 		g2.drawImage(this.img, 0, 0, w * 2, h * 2, null);
 	}
 
-	public void run()
-	{
-	}
+	public void run() {}
 
-	public String getParameter(String name)
-	{
+	public String getParameter(String name) {
 		String custom = (String) this.customParameters.get(name);
 		if (custom != null)
 			return custom;
-		try
-		{
+		try {
 			return super.getParameter(name);
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			this.customParameters.put(name, null);
 		}
 		return null;
 	}
 
-	public void appletResize(int width, int height)
-	{
-	}
+	public void appletResize(int width, int height) {}
 
-	public URL getDocumentBase()
-	{
-		try
-		{
+	public URL getDocumentBase() {
+		try {
 			return new URL("http://www.minecraft.net/game/");
-		}
-		catch (MalformedURLException e)
-		{
+		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public void mouseClicked(MouseEvent arg0)
-	{
-	}
+	public void mouseClicked(MouseEvent arg0) {}
 
-	public void mouseEntered(MouseEvent arg0)
-	{
-	}
+	public void mouseEntered(MouseEvent arg0) {}
 
-	public void mouseExited(MouseEvent arg0)
-	{
-	}
+	public void mouseExited(MouseEvent arg0) {}
 
-	public void mousePressed(MouseEvent me)
-	{
+	public void mousePressed(MouseEvent me) {
 		int x = me.getX() / 2;
 		int y = me.getY() / 2;
 		int w = getWidth() / 2;
 		int h = getHeight() / 2;
 
-		if (contains(x, y, w / 2 - 56 - 8, h / 2, 56, 20))
-		{
+		if (contains(x, y, w / 2 - 56 - 8, h / 2, 56, 20)) {
 			removeMouseListener(this);
 			this.gameUpdater.shouldUpdate = true;
 			this.gameUpdater.pauseAskUpdate = false;
 			this.hasMouseListener = false;
 		}
-		if (contains(x, y, w / 2 + 8, h / 2, 56, 20))
-		{
+		if (contains(x, y, w / 2 + 8, h / 2, 56, 20)) {
 			removeMouseListener(this);
 			this.gameUpdater.shouldUpdate = false;
 			this.gameUpdater.pauseAskUpdate = false;
@@ -360,14 +294,11 @@ public class Launcher extends Applet implements Runnable, AppletStub, MouseListe
 		}
 	}
 
-	private boolean contains(int x, int y, int xx, int yy, int w, int h)
-	{
+	private boolean contains(int x, int y, int xx, int yy, int w, int h) {
 		return (x >= xx) && (y >= yy) && (x < xx + w) && (y < yy + h);
 	}
 
-	public void mouseReleased(MouseEvent arg0)
-	{
-	}
+	public void mouseReleased(MouseEvent arg0) {}
 }
 
 /*

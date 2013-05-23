@@ -14,22 +14,20 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package fr.eelite.mclauncher;
 
 import java.util.ArrayList;
 
-public class MinecraftLauncher
-{
-	public static void main(String[] args) throws Exception
-	{
+public class MinecraftLauncher {
+
+	public static void main(String[] args) throws Exception {
 		float heapSizeMegs = (float) (Runtime.getRuntime().maxMemory() / 1024L / 1024L);
 
 		if (heapSizeMegs > 511.0F)
 			LauncherFrame.main(args);
 		else
-			try
-			{
+			try {
 				String pathToJar = MinecraftLauncher.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
 
 				ArrayList<String> params = new ArrayList<String>();
@@ -49,12 +47,10 @@ public class MinecraftLauncher
 				if (process == null)
 					throw new Exception("!");
 				System.exit(0);
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-				LauncherFrame.main(args);
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			LauncherFrame.main(args);
+		}
 	}
 }
 

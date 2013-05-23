@@ -14,22 +14,19 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package fr.eelite.mclauncher;
 
 import javax.swing.JButton;
 
-public class TransparentButton extends JButton
-{
+public class TransparentButton extends JButton {
 	private static final long serialVersionUID = 1L;
 
-	public TransparentButton(String string)
-	{
+	public TransparentButton(String string) {
 		super(string);
 	}
 
-	public boolean isOpaque()
-	{
+	public boolean isOpaque() {
 		return false;
 	}
 }

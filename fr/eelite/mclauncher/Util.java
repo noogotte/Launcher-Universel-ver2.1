@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package fr.eelite.mclauncher;
 
 import java.io.BufferedReader;
@@ -31,43 +31,33 @@ import java.security.cert.Certificate;
 import javax.net.ssl.HttpsURLConnection;
 
 
-public class Util
-{
+public class Util {
 	private static File workDir = null;
 
-	public static File getWorkingDirectory()
-	{
+	public static File getWorkingDirectory() {
 		if (workDir == null)
 			workDir = getWorkingDirectory(GamePath.getProperty("gamepath"));
 		return workDir;
 	}
 
-	public static File getWorkingDirectory(String applicationName)
-	{
+	public static File getWorkingDirectory(String applicationName) {
 		String dot = "";
 		if(Config.USE_DOT)
 			dot = ".";
-	
+
 		String userHome = System.getProperty("user.home", dot);
 		File workingDirectory;
-		if (getPlatform() == OS.solaris || getPlatform() == OS.linux)
-		{
+		if (getPlatform() == OS.solaris || getPlatform() == OS.linux) {
 			workingDirectory = new File(userHome, dot + applicationName + '/');
-		}
-		else if (getPlatform() == OS.windows)
-		{
+		} else if (getPlatform() == OS.windows) {
 			String applicationData = System.getenv("APPDATA");
 			if (applicationData != null)
 				workingDirectory = new File(applicationData, dot + applicationName + '/');
 			else
 				workingDirectory = new File(userHome, dot + applicationName + '/');
-		}
-		else if (getPlatform() == OS.macos)
-		{
+		} else if (getPlatform() == OS.macos) {
 			workingDirectory = new File(userHome, "Library/Application Support/" + applicationName);
-		}
-		else
-		{
+		} else {
 			workingDirectory = new File(userHome, applicationName + '/');
 		}
 
@@ -76,8 +66,7 @@ public class Util
 		return workingDirectory;
 	}
 
-	private static OS getPlatform()
-	{
+	private static OS getPlatform() {
 		String osName = System.getProperty("os.name").toLowerCase();
 		if (osName.contains("win"))
 			return OS.windows;
@@ -94,11 +83,9 @@ public class Util
 		return OS.unknown;
 	}
 
-	public static String excutePost(String targetURL, String urlParameters)
-	{
+	public static String executePost(String targetURL, String urlParameters) {
 		HttpsURLConnection connection = null;
-		try
-		{
+		try {
 			URL url = new URL(targetURL);
 			connection = (HttpsURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
@@ -123,8 +110,7 @@ public class Util
 			PublicKey pk = c.getPublicKey();
 			byte[] data = pk.getEncoded();
 
-			for (int i = 0; i < data.length; i++)
-			{
+			for (int i = 0; i < data.length; i++) {
 				if (data[i] == bytes[i])
 					continue;
 				throw new RuntimeException("Les clés publics sont différentes");
@@ -140,8 +126,7 @@ public class Util
 
 			StringBuffer response = new StringBuffer();
 			String line;
-			while ((line = rd.readLine()) != null)
-			{
+			while ((line = rd.readLine()) != null) {
 				response.append(line);
 				response.append('\r');
 			}
@@ -149,39 +134,29 @@ public class Util
 
 			String str1 = response.toString();
 			return str1;
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		}
-		finally
-		{
+		} finally {
 			if (connection != null)
 				connection.disconnect();
 		}
 	}
 
-	public static boolean isEmpty(String str)
-	{
+	public static boolean isEmpty(String str) {
 		return (str == null) || (str.length() == 0);
 	}
 
-	public static void openLink(URI uri)
-	{
-		try
-		{
+	public static void openLink(URI uri) {
+		try {
 			Object o = Class.forName("java.awt.Desktop").getMethod("getDesktop", new Class[0]).invoke(null, new Object[0]);
 			o.getClass().getMethod("browse", new Class[] { URI.class }).invoke(o, new Object[] { uri });
-		}
-		catch (Throwable e)
-		{
+		} catch (Throwable e) {
 			System.out.println("Erreur Ã  l'ouverture du lien " + uri.toString());
 		}
 	}
 
-	private static enum OS
-	{
+	private static enum OS {
 		linux, solaris, windows, macos, unknown;
 	}
 }

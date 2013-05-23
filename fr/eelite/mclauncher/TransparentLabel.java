@@ -14,30 +14,26 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package fr.eelite.mclauncher;
 
 import java.awt.Color;
 import javax.swing.JLabel;
 
-public class TransparentLabel extends JLabel
-{
+public class TransparentLabel extends JLabel {
 	private static final long serialVersionUID = 1L;
 
-	public TransparentLabel(String string, int center)
-	{
+	public TransparentLabel(String string, int center) {
 		super(string, center);
 		setForeground(Color.WHITE);
 	}
 
-	public TransparentLabel(String string)
-	{
+	public TransparentLabel(String string) {
 		super(string);
 		setForeground(Color.WHITE);
 	}
 
-	public boolean isOpaque()
-	{
+	public boolean isOpaque() {
 		return false;
 	}
 }

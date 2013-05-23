@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package fr.eelite.mclauncher;
 
 import java.awt.Dimension;
@@ -25,35 +25,29 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class LogoPanel extends JPanel
-{
+public class LogoPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Image bgImage;
 
-	public LogoPanel()
-	{
+	public LogoPanel() {
 		setOpaque(true);
-		try
-		{
-			BufferedImage src = ImageIO.read(LoginForm.class.getResourceAsStream("/theme"+"/"+Config.getProperty("theme")+"/"+Theme.getProperty("logo")));
+		try {
+			BufferedImage src = ImageIO.read(LoginForm.class.getResourceAsStream(
+					"/theme"+"/" + Config.getProperty("theme") + "/" + Theme.getProperty("logo")));
 			int w = src.getWidth();
 			int h = src.getHeight();
 			this.bgImage = src.getScaledInstance(w, h, 16);
 			setPreferredSize(new Dimension(w + 32, h + 32));
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void update(Graphics g)
-	{
+	public void update(Graphics g) {
 		paint(g);
 	}
 
-	public void paintComponent(Graphics g2)
-	{
+	public void paintComponent(Graphics g2) {
 		g2.drawImage(this.bgImage, 24, 15, null);
 	}
 }

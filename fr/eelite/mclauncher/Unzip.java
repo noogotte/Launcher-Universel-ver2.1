@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package fr.eelite.mclauncher;
 
 import java.io.BufferedInputStream;
@@ -30,49 +30,46 @@ import java.util.zip.ZipInputStream;
 
 public class Unzip{
 
-  
-    public static void unzip(File zipfile, File folder) throws FileNotFoundException, IOException{
 
-        ZipInputStream zis = new ZipInputStream(
-                new BufferedInputStream(
-                        new FileInputStream(zipfile.getCanonicalFile())));
+	public static void unzip(File zipfile, File folder) throws FileNotFoundException, IOException{
 
-        ZipEntry ze = null;
-        try {
-            while((ze = zis.getNextEntry()) != null){
+		ZipInputStream zis = new ZipInputStream(
+				new BufferedInputStream(
+						new FileInputStream(zipfile.getCanonicalFile())));
 
-                File f = new File(folder.getCanonicalPath(), ze.getName());
-                
-                if (ze.isDirectory()) {
-                    f.mkdirs();
-                    continue;
-                }
-                
-                f.getParentFile().mkdirs();
-                OutputStream fos = new BufferedOutputStream(
-                        new FileOutputStream(f));
-                try {
-                    try {
-                        final byte[] buf = new byte[8192];
-                        int bytesRead;
-                        while (-1 != (bytesRead = zis.read(buf)))
-                            fos.write(buf, 0, bytesRead);
-                    }
-                    finally {
-                        fos.close();
-                    }
-                }
-                catch (final IOException ioe) {
-                    f.delete();
-                    throw ioe;
-                }
-            }
-        }
-        finally {
-            zis.close();
-            zipfile.delete();
-        }
-    }
+		ZipEntry ze = null;
+		try {
+			while ((ze = zis.getNextEntry()) != null) {
+
+				File f = new File(folder.getCanonicalPath(), ze.getName());
+
+				if (ze.isDirectory()) {
+					f.mkdirs();
+					continue;
+				}
+
+				f.getParentFile().mkdirs();
+				OutputStream fos = new BufferedOutputStream(
+						new FileOutputStream(f));
+				try {
+					try {
+						final byte[] buf = new byte[8192];
+						int bytesRead;
+						while (-1 != (bytesRead = zis.read(buf)))
+							fos.write(buf, 0, bytesRead);
+					} finally {
+						fos.close();
+					}
+				} catch (final IOException ioe) {
+					f.delete();
+					throw ioe;
+				}
+			}
+		} finally {
+			zis.close();
+			zipfile.delete();
+		}
+	}
 }
 
 /*
